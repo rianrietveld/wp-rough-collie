@@ -1,12 +1,14 @@
 <?php
-/** Import */
+/**
+ * Import functionality.
+ */
 
 if ( ! is_admin() ) {
 	die();
 }
 
 /**
- * Create menu item
+ * Create menu item in the Adin.
  */
 function rough_collie_admin_menu() {
 	add_menu_page(
@@ -39,10 +41,11 @@ add_filter('upload_mimes', 'rough_collie_upload_mimes');
  */
 function zooeasy_import() {
 
-	?>
-	<div class="wrap">
-		<h1 class="wp-heading-inline">Gegevens honden, stambomen en tentoonstellingen bijwerken</h1>
-	<?php
+	?> <div class="wrap"><?php
+
+	printf( '<h1 class="wp-heading-inline"%s</h1>',
+		esc_html__( 'Gegevens honden en kennels importeren', 'roughcollie' )
+	);
 
 	$upload_dir  = wp_get_upload_dir();
 	$upload_path = $upload_dir['path'];
@@ -50,154 +53,74 @@ function zooeasy_import() {
 	if ( isset( $_GET['rc_action'] ) ) {
 
 		if ( 'import' === $_GET['rc_action'] ) {
-			echo "<h2>Gegevens in de database verwerken.</h2>";
 
-			$data_rows_names = rough_collie_data();
+			printf( '<h2>%s</h2>',
+				esc_html__( 'Gegevens in de database verwerken', 'roughcollie' )
+			);
 
-			rough_collie_import_and_process( $data_rows_names, $upload_path );
+			rough_collie_import_and_process( $upload_path );
 		}
 
 	} else {
 
-		echo "<h2>Bestanden controleren</h2>";
+		printf( '<h2>%s</h2>',
+			esc_html__( 'Start', 'roughcollie' )
+		);
 
-		$zooeasy_file_names = rough_collie_files();
-
-		foreach ( $zooeasy_file_names as $name ) {
-			if ( ! file_exists( $upload_path. '/' . $name ) ) {
-				echo "<p>Bestand $name is nog niet ge-upload, doe dat eerst voordat je verder gaat.</p>";
-			}
-		}
-
-		printf( '<a href="%s">%s</a>',
+		printf( '<a href="%s" class="button">%s</a>',
 			admin_url( '?page=zooeasy-import&rc_action=import' ),
-			esc_html( 'Gegevens inporteren in de database' )
+			esc_html__( 'Gegevens importeren in de database', 'roughcollie' )
+		);
+
+		printf( '<p>%s</p>',
+			esc_html__( 'Dit kan een paar minuten duren, onderbreek het proces niet', 'roughcollie' )
 		);
 
 	}
 
-	?>
-	</div>
-	<?php
+	?></div><?php
+
 }
 
-	function rough_collie_import_and_process( $data_rows_names, $upload_path ) {
-
-		// Combinatie.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'Combinatie.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["Combinatie"], 'Combinatie', 'rough_combinatie' );
-		echo $success;
-
-		// Dier.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'Dier.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["Dier"], 'Dier', 'rough_dier' );
-		echo $success;
-
-		// KMGroep.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'KMGroep.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["KMGroep"], 'KMGroep', 'rough_kmgroep' );
-		echo $success;
-
-		// KMNaam.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'KMNaam.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["KMNaam"], 'KMNaam', 'rough_kmnaam' );
-		echo "<p>$success</p>";
-
-		// KMType.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'KMType.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["KMType"], 'KMType', 'rough_kmtype' );
-		echo "<p>$success</p>";
-
-		// Logboek.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'Logboek.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["Logboek"], 'Logboek', 'rough_logboek' );
-		echo "<p>$success</p>";
-
-		// LogboekCategorie.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'LogboekCategorie.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["LogboekCategorie"], 'LogboekCategorie', 'rough_logboekcategorie' );
-		echo "<p>$success</p>";
-
-		// Naam.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'Naam.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["Naam"], 'Naam', 'rough_naam' );
-		echo "<p>$success</p>";
-
-		// Persoon.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'Persoon.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["Persoon"], 'Persoon', 'rough_persoon' );
-		echo "<p>$success</p>";
-
-		// PersoonCategorie.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'PersoonCategorie.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["PersoonCategorie"], 'PersoonCategorie', 'rough_persooncategorie' );
-		echo "<p>$success</p>";
-
-		// Ras.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'Ras.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["Ras"], 'Ras', 'rough_ras' );
-		echo "<p>$success</p>";
-
-		// Tentoonstelling.csv
-		$csv     = array_map('str_getcsv', file( $upload_path . '/' . 'Tentoonstelling.csv' ) );
-		$success = rough_collie_process( $csv, $data_rows_names["Tentoonstelling"], 'Tentoonstelling', 'rough_tentoonstelling' );
-		echo "<p>$success</p>";
-
-		echo "<p>Alle bestanden zijn verwerkt</p>";
-	}
-
-
-	function rough_collie_process ( $csv, $data_rows_names, $name, $table ) {
-		global $wpdb;
-
-		$array_size = count( $csv );
-
-		if ( $array_size > 1 ) {
-
-			// Get the column names of the CSV in an array.
-			$csv_head_names = explode( ';', $csv[0][0] );
-
-			// Fill the array with names and keys from the CSV.
-			$data_rows_filled = rough_collie_get_key_by_name( $data_rows_names, $csv_head_names );
-
-			// Truncate the database table.
-			$sql = "TRUNCATE TABLE $table";
-			$wpdb->query( $sql );
-
-			echo "<p>Start vullen $name ($array_size gegevens te vullen)</p>";
-
-			// Add data to the according database tables.
-
-			// Skip the first row (those are the column names).
-			unset( $csv[0] );
-
-			// Insert line by line in the database.
-			foreach ( $csv as $line ) {
-
-				// Create an array of the line.
-				$line   = explode( ';', $line[0] );
-
-				foreach ( $data_rows_filled as $key => $value ) {
-					if ( empty ( $line[ $value ] ) ) {
-						$line[ $value ] = 0;
-					}
-					// Create the array with column names and values.
-					$data[$key] = sanitize_text_field( $line[ $value ] );
-				}
-
-				$wpdb->insert( $table, $data);
-			}
-		}
-
-		return "<p>$name is klaar.</p>";
-	}
 
 /**
- * @param $table_names
- * @param $name
+ * Collect CSV files and process them.
  *
- * @return array
+ * @param $upload_path string Upload path import files.
+ *
+ * @return string End process.
  */
+function rough_collie_import_and_process( $upload_path ) {
+
+	$zooeasy_files = glob( $upload_path . '/*.{csv}', GLOB_BRACE );
+
+	if ( empty( $zooeasy_files ) ) {
+		return esc_html__( 'Geen csv bestanden gevonden om te importeren.', 'roughcollie' );
+	}
+
+	// Truncate rough_animal and rough_contact.
+	global $wpdb;
+	$wpdb->query('TRUNCATE TABLE rough_animal');
+	$wpdb->query('TRUNCATE TABLE rough_contact');
+
+	foreach ( $zooeasy_files as $zooeasy_file ) {
+
+		printf( '<p>%s: %s</p>',
+			esc_html__( 'Verwerken', 'roughcollie' ),
+			esc_url( $zooeasy_file )
+		);
+
+
+		if ( file_exists( $zooeasy_file  ) ) {
+			$done = rough_collie_ftp_import( $zooeasy_file );
+			echo "<p>" . esc_url( $done ) . "</p>";
+		}
+
+	}
+	return esc_html__( 'Alle bestanden verwerkt.', 'roughcollie' );
+	}
+
+
 function rough_collie_get_key_by_name( $data_rows_names, $csv_head_names ) {
 
 	$data_rows_numbers = array();
@@ -213,73 +136,92 @@ function rough_collie_get_key_by_name( $data_rows_names, $csv_head_names ) {
 
 }
 
-function rough_collie_data() {
+function rough_collie_ftp_import( $zooeasy_file ) {
 
-	$data_rows_names['Dier'] = array (
-		'IdentificatieCombinatie',
-		'IdentificatieKleur',
-		'IdentificatieRas',
-		'IdentificatieFokker',
-		'Geslacht',
-		'Geboortedatum',
-		'Overlijdingsdatum',
-		'Opmerkingen',
-		'Bijzonderheden',
-		'Volgnr',
-		'IdentificatieTitelVoorNaam',
-		'Naam',
-		'Registratienummer',
-		'RegistratienummerMoeder',
-		'RegistratienummerVader',
-		'IdentificatieTitelAchterNaam',
-		'TentoonstellingJN',
-		'Statuskleur',
-		'AVK',
-		'Roepnaam',
-		'Geboortejaar'
-	);
+	global $wpdb;
 
-	$data_rows_names['Persoon'] = array (
-		'CombinatieNaam',
-		'Naam'
-	);
+	// determine which file and columns
+	if ( stristr( $zooeasy_file, 'animal') ) {
 
-	$data_rows_names['Tentoonstelling'] = array (
-		'IdentificatieNaam',
-		'IdentificatieKeurmeester',
-		'IdentificatiePlaats',
-		'IdentificatiePrijs',
-		'IdentificatiePredikaat',
-		'Type',
-		'Datum',
-		'Seizoen',
-		'Punten',
-		'Keuringsverslag',
-		'IdentificatieKlasse',
-		'Registratienummer',
-		'Jaar'
-	);
+		$column_names = array (
+			"RegistrationNumber",           // IdentificatieCombinatie      2468/97
+			"Gender",                       // Geslacht                     Teef
+			"Name",                         // Naam                         Sheranda's Royal Guard Dream
+			"TitleInFrontOfName",           // IdentificatieTitelVoorNaam   Ch.
+			"Color",                        // IdentificatieKleur           Sable
+			"BreederNumber",                // IdentificatieFokker  // in contacts
+			"FatherRegistrationNumber",     // RegistratienummerVader
+			"MotherRegistrationNumber",     // RegistratienummerMoeder
+			"Born",                         // Geboortejaar
+			"Deceased"                      // Overlijdingsdatum
+		);
+		$table              = "rough_animal";
 
-	return $data_rows_names;
+
+	} elseif ( stristr( $zooeasy_file, 'contact')  ) {
+
+		$column_names = array (
+			'Number',
+			'BusinessName',
+			"Homepage"
+		);
+		$table        = "rough_contact";
+
+	} else {
+
+		return ( "<p><strong>" . $zooeasy_file . '</strong> is geen invoerbestand</p>' );
+
+	}
+
+	$handle = @fopen( $zooeasy_file, "r") ;
+
+	if ( $handle ) {
+
+		// First row , column names.
+		$buffer                 = fgets( $handle );
+		$csv_head_names = explode(";", $buffer );
+
+		while ( !feof( $handle ) ) {
+
+			$buffer = fgets( $handle );
+			$line   = explode( ";", $buffer );
+
+			$data_rows_numbers = rough_collie_get_key_by_name( $column_names, $csv_head_names );
+
+			foreach ( $data_rows_numbers as $key => $value ) {
+
+					if ( empty ( $line[ $value ] ) ) {
+						$line[ $value ] = 0;
+					}
+					$line[ $value ] = trim ( $line[ $value ], '"' );
+					$data[$key]     = sanitize_text_field( $line[ $value ] );
+					}
+
+				$wpdb->insert( $table, $data );
+
+		}
+
+		fclose( $handle );
+
+		rough_collie_remove_csv_attachment( $zooeasy_file );
+
+	};
+
+	return "<p>$zooeasy_file ingevoerd en bestand verwijderd</p>";
 
 }
 
-function rough_collie_files() {
 
-	$zooeasy_file_names = array (
-		'Combinatie.csv',
-		'Dier.csv',
-		'KMGroep.csv',
-		'KMNaam.csv',
-		'KMType.csv',
-		'Logboek.csv',
-		'LogboekCategorie.csv',
-		'Naam.csv',
-		'Persoon.csv',
-		'PersoonCategorie.csv',
-		'Ras.csv',
-		'Tentoonstelling.csv'
-	);
+function rough_collie_remove_csv_attachment( $zooeasy_file ) {
 
-	return $zooeasy_file_names;
+	$base          = basename( $zooeasy_file );
+	$wp_upload_dir = wp_upload_dir();
+	$filurl        = $wp_upload_dir['url'] . "/" . $base;
+	$csv_id        = attachment_url_to_postid( $filurl );
+
+	if ( $csv_id > 0 ) {
+		wp_delete_attachment ( $csv_id, true );
+	} else {
+		echo "<p>Kon $zooeasy_file niet verwijderen, doe het handmatig in de Media Bibiotheek</p>";
+	}
 }
