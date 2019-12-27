@@ -42,40 +42,6 @@ function rough_collie_enqueue_styles() {
 	);
 }
 
-add_action( 'init', 'rough_collie_create_posttypes' );
-/**
- * Create custom post types
- */
-function rough_collie_create_posttypes() {
-	register_post_type( 'collie',
-
-		array(
-			'labels' => array(
-				'name' => __( 'Collie' ),
-				'singular_name' => __( 'Collie' )
-			),
-			'public' => true,
-			'has_archive' => false,
-			'rewrite' => array('slug' => 'collie'),
-		)
-	);
-
-	register_post_type( 'kennel',
-
-		array(
-			'labels' => array(
-				'name' => __( 'Kennel' ),
-				'singular_name' => __( 'Kennel' )
-			),
-			'public' => true,
-			'has_archive' => false,
-			'rewrite' => array('slug' => 'fokker'),
-		)
-	);
-
-}
-
-
 if ( is_admin() ) {
 
 	require get_stylesheet_directory() . '/modules/zooeasy-import.php';
@@ -87,27 +53,3 @@ if ( is_admin() ) {
 	};
 
 }
-
-/*
-Import setup (dit in de wiki uitschrijven)
-
-per file:
-Empty data in DB
-Fill with new data
-
-If all are completed:
-
-Update existing collie with new data if exist or else
-add new collie: cpt
-
-Update existing kennels with new data if exist or else
-add new kennel: cpt
-
-data structure:
-Collie:
-Registratienummer, Naam,
-
-Kennel:*/
-
-
-
