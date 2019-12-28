@@ -42,6 +42,24 @@ function rough_collie_enqueue_styles() {
 	);
 }
 
+/**
+ * Register vasr for collies and kennels.
+ *
+ * @param $vars array Query vars.
+ *
+ * @return array Extended query vars.
+ */
+function rough_collie_query_vars_filter( $vars ) {
+	$vars[] .= 'rc_colliename';
+	$vars[] .= 'rc_collienumber';
+	$vars[] .= 'rc_kennelname';
+	$vars[] .= 'rc_kennelletter';
+	$vars[] .= 'rc_kennelcountry';
+	$vars[] .= 'rc_kennelnumber';
+	return $vars;
+}
+add_filter( 'query_vars', 'rough_collie_query_vars_filter' );
+
 if ( is_admin() ) {
 
 	require get_stylesheet_directory() . '/modules/zooeasy-import.php';
@@ -53,3 +71,30 @@ if ( is_admin() ) {
 	};
 
 }
+
+function rough_collie_disable_search( $query, $error = true ) {
+
+	if (is_search()) {
+		$query->is_search       = false;
+		$query->query_vars['s'] = false;
+		$query->query['s']      = false;
+
+		if ( $error === true )  {
+			$query->is_404 = true;
+		}
+	}
+}
+
+if( !is_admin() ) {
+	add_action( 'parse_query', 'rough_collie_disable_search' );
+	add_filter( 'get_search_form', function() { return null; } );
+}
+
+function rough_collie_first_uppercase( $string ) {
+
+	// $string = strtolower( $string );
+	// $string = ucwords( esc_html( $string ) );
+
+	return ( $string );
+}
+

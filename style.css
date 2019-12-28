@@ -13,3 +13,64 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
+/*
+ * Forms
+ */
+
+.rc-form {
+  margin-bottom: 3em;
+}
+
+input, textarea {
+  border: 1px solid #575757;
+}
+.rc-form input {
+   width: 50%;
+   margin: 0.5em auto;
+ }
+
+.rc-form input[type=submit] {
+  width: auto;
+  margin: 0.5em auto;
+  background-color: #BD5B05;
+  color: #fff;
+  border: solid 1px #BD5B05;
+}
+.rc-form input[type=submit]:hover,
+.rc-form input[type=submit]:focus {
+  background-color: #fff;
+  color: #BD5B05;
+}
+
+.rc-form select {
+  min-width: 50%;
+}
+
+dt {
+  float: left;
+  width: 30%;
+  padding: .25em 0;
+  clear: left;
+  margin-bottom: 0.5em;
+}
+
+dd {
+  float: left;
+  width: 60%;
+  padding: .25em 0;
+  margin-bottom: 0.5em;
+}
+
+dl:after {
+  content:"";
+  display:table;
+  clear:both;
+}
+
+.entry-title,
+.widecolumn h2 {
+  font-size: 1.5em;
+  line-height: 1.2308;
+  margin-bottom: 1.2308em;
+}
+

@@ -18,7 +18,7 @@ function rough_collie_admin_menu() {
 		'zooeasy-import',
 		'zooeasy_import',
 		'',
-		null );
+		21 );
 }
 add_action('admin_menu', 'rough_collie_admin_menu');
 
@@ -100,7 +100,7 @@ function rough_collie_import_and_process( $upload_path ) {
 
 	// Truncate rough_animal and rough_contact.
 	global $wpdb;
-	$wpdb->query('TRUNCATE TABLE rough_animal');
+	//$wpdb->query('TRUNCATE TABLE rough_animal');
 	$wpdb->query('TRUNCATE TABLE rough_contact');
 
 	foreach ( $zooeasy_files as $zooeasy_file ) {
@@ -109,7 +109,6 @@ function rough_collie_import_and_process( $upload_path ) {
 			esc_html__( 'Verwerken', 'roughcollie' ),
 			esc_url( $zooeasy_file )
 		);
-
 
 		if ( file_exists( $zooeasy_file  ) ) {
 			$done = rough_collie_ftp_import( $zooeasy_file );
@@ -155,7 +154,7 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 			"Born",                         // Geboortejaar
 			"Deceased"                      // Overlijdingsdatum
 		);
-		$table              = "rough_animal";
+		$table       = "rough_animal";
 
 
 	} elseif ( stristr( $zooeasy_file, 'contact')  ) {
@@ -163,7 +162,8 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 		$column_names = array (
 			'Number',
 			'BusinessName',
-			"Homepage"
+			"Homepage",
+			"Country"
 		);
 		$table        = "rough_contact";
 
