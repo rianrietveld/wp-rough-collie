@@ -1,7 +1,7 @@
 /*
 Theme Name: 	Rough Collie
 Author: Rian 	Rietveld
-Author URI: 	https://rianrietveld.nl/
+Author URI: 	https://rianrietveld.com/
 Description: 	Custom Made Child Theme for Rough Collie.
 Template:		twentyfifteen
 Version: 		1.0
@@ -12,10 +12,6 @@ Text Domain: right: oughcollie
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
-
-/*
- * Forms
- */
 
 .rc-form {
   margin-bottom: 3em;
@@ -72,5 +68,20 @@ dl:after {
   font-size: 1.5em;
   line-height: 1.2308;
   margin-bottom: 1.2308em;
+}
+
+
+.site-title a,
+.main-navigation .current-menu-item > a,
+.main-navigation .current-menu-ancestor > a {
+  color: #BD5B05;
+}
+
+.main-navigation a:hover,
+.main-navigation a:focus,
+.site-title a:hover,
+.site-title a:focus {
+  text-decoration: underline;
+  color: #333;
 }
 
