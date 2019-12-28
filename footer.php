@@ -14,20 +14,7 @@
 
 <footer id="colophon" class="site-footer" role="contentinfo">
 	<div class="site-info">
-		<?php
-		/**
-		 * Fires before the Twenty Fifteen footer text for footer customization.
-		 *
-		 * @since Twenty Fifteen 1.0
-		 */
-		do_action( 'twentyfifteen_credits' );
-		?>
-		<?php
-		if ( function_exists( 'the_privacy_policy_link' ) ) {
-			the_privacy_policy_link( '', '<span role="separator" aria-hidden="true"></span>' );
-		}
-		?>
-
+		&copy; copyright Ad Mommers.
 	</div><!-- .site-info -->
 </footer><!-- .site-footer -->
 
