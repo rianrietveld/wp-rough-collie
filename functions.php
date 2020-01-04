@@ -25,12 +25,6 @@ function rough_collie_enqueue_styles() {
 	);
 }
 
-function rough_collie_child_theme_slug_setup() {
-	load_child_theme_textdomain( 'parent-theme-slug', get_stylesheet_directory() . '/languages' );
-}
-add_action( 'after_setup_theme', 'rough_collie_child_theme_slug_setup' );
-
-
 /**
  * Register vars for collies and kennels.
  *

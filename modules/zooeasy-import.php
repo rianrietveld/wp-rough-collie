@@ -48,7 +48,7 @@ function zooeasy_import() {
 
 	?> <div class="wrap"><?php
 
-	printf( '<h1 class="wp-heading-inline"%s</h1>',
+	printf( '<h1 class="wp-heading-inline">%s</h1>',
 		esc_html__( 'Import data from collies and kennels.', 'roughcollie' )
 	);
 
@@ -86,7 +86,6 @@ function zooeasy_import() {
 	?></div><?php
 
 }
-
 
 /**
  * Collect CSV files and process them.
@@ -173,8 +172,10 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 		$table        = "rough_contact";
 
 	} else {
-		
-		return ( "<p><strong>" . $zooeasy_file . '</strong> is geen invoerbestand</p>' );
+
+		$warning = "<p><strong>" . $zooeasy_file . "</strong>" . __( 'is not an import file.', 'roughcollie' ) . "</p>";
+
+		return ( $warning );
 
 	}
 
@@ -212,7 +213,9 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 
 	};
 
-	return "<p>$zooeasy_file ingevoerd en bestand verwijderd</p>";
+	$message = "<p>The data from <strong>" . $zooeasy_file . "</strong>" . __( 'has been imported and the file deleted.', 'roughcollie' ) . "</p>";
+
+	return ($message );
 
 }
 
@@ -227,6 +230,11 @@ function rough_collie_remove_csv_attachment( $zooeasy_file ) {
 	if ( $csv_id > 0 ) {
 		wp_delete_attachment ( $csv_id, true );
 	} else {
-		echo "<p>Kon $zooeasy_file niet verwijderen, doe het handmatig in de Media Bibiotheek</p>";
+
+		printf('<p><strong>%s</strong>%s</p>',
+			esc_html( $zooeasy_file ),
+			esc_html__( 'has not been removed, please remove it yourself in the media library.', 'roughcollie' )
+		);
+
 	}
 }

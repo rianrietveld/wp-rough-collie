@@ -128,7 +128,7 @@ function rough_collie_show_data( $animal_data ) {
 		<dt><?php esc_html_e('Colour', 'roughcollie'); ?></dt><dd><?php echo esc_html( $color ); ?></dd>
 		<dt><?php esc_html_e('Sex', 'roughcollie'); ?></dt><dd><?php echo esc_html( $gender ); ?></dd>
 		<dt><?php esc_html_e('Date of birth', 'roughcollie'); ?></dt><dd><?php echo esc_html( $born ); ?></dd>
-		<dt><?php esc_html_e('Deseased on', 'roughcollie'); ?></dt><dd><?php echo esc_html( $deceased ); ?></dd>
+		<dt><?php esc_html_e('Deceased on', 'roughcollie'); ?></dt><dd><?php echo esc_html( $deceased ); ?></dd>
 		<dt><?php esc_html_e('Kennel or Breeder', 'roughcollie'); ?></dt><dd><?php echo $breeder; ?></dd>
 	</dl>
 

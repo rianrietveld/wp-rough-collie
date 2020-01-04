@@ -22,14 +22,14 @@ function rough_collie_get_kennel_title( $kennelvars ) {
 	$title = get_the_title();
 
 	if ( ! empty( $kennelvars['rc_kennelname'] )  ) {
-		$title = "U zocht op de kennelnaam: " . $kennelvars['rc_kennelname'];
+		$title = __("You searched for the kennel name: ", 'roughcollie') . $kennelvars['rc_kennelname'];
 	}
 	if ( ! empty( $kennelvars['rc_kennelletter'] )  ) {
-		$title = "U zocht op de kennelbeginletter: " . $kennelvars['rc_kennelletter'];
+		$title = __("You searched for the kennel name begin letter: ", 'roughcollie') . $kennelvars['rc_kennelletter'];
 	}
 
 	if ( ! empty( $kennelvars['rc_kennelcountry'] )  ) {
-		$title = "U zocht op kennels in: " . $kennelvars['rc_kennelcountry'];
+		$title = __("You searched for the kennels in: ", 'roughcollie') . $kennelvars['rc_kennelcountry'];
 	}
 
 	return $title;
@@ -61,17 +61,17 @@ function rough_collie_show_kennel_search_forms() {
 
 	?>
 
-	<form action="/zoek-een-kennel-of-fokker/" method="post" class="rc-form">
+	<form action="/kennel/" method="post" class="rc-form">
 		<div>
-			<label for="rc_kennelname">Zoek een kennel op naam</label><br />
+			<label for="rc_kennelname"><?php esc_html_e('Search a kennel or breeder by name', 'roughcollie'); ?></label><br />
 			<input type="text" name="rc_kennelname" id="rc_kennelname"><br />
-			<input type="submit" name="submit" value="Zoek op kennelnaam" /><br />
+			<input type="submit" name="submit" value="<?php esc_html_e('Search by name', 'roughcollie'); ?>" /><br />
 		</div>
 	</form>
 
-	<form action="/zoek-een-kennel-of-fokker/" method="post" class="rc-form">
+	<form action="/kennel/" method="post" class="rc-form">
 		<div>
-			<label for="rc_kennelletter">Zoek een kennel op beginletter</label><br />
+			<label for="rc_kennelletter"><?php esc_html_e('Search a kennel or breeder by begin letter', 'roughcollie'); ?></label><br />
 			<select name="rc_kennelletter" id="rc_kennelletter">
 				<?php
 
@@ -83,13 +83,13 @@ function rough_collie_show_kennel_search_forms() {
 				}
 				?>
 			</select><br />
-			<input type="submit" name="submit" value="Zoek op beginletter" /><br />
+			<input type="submit" name="submit" value="<?php esc_html_e('Search by begin letter', 'roughcollie'); ?>" /><br />
 		</div>
 	</form>
 
-	<form action="/zoek-een-kennel-of-fokker/" method="post" class="rc-form">
+	<form action="/kennel/" method="post" class="rc-form">
 		<div>
-			<label for="rc_kennelcountry">Zoek een kennel op land</label><br />
+			<label for="rc_kennelcountry"><?php esc_html_e('Search a kennel or breeder by country', 'roughcollie'); ?></label><br />
 			<select name="rc_kennelcountry" id="rc_kennelcountry">
 				<?php
 
@@ -101,7 +101,7 @@ function rough_collie_show_kennel_search_forms() {
 				}
 				?>
 			</select><br />
-			<input type="submit" name="submit" value="Zoek op land" /><br />
+			<input type="submit" name="submit" value="<?php esc_html_e('Search by country', 'roughcollie'); ?>" /><br />
 		</div>
 	</form>
 
@@ -132,7 +132,7 @@ function rough_collie_show_kennels( $kennelvars ) {
 	}
 
 	if ( empty ( $kennel_data ) ) {
-		echo "Geen kennels gevonden.";
+		esc_html_e('No kennels found.', 'roughcollie');
 		return;
 	}
 
@@ -198,7 +198,7 @@ function rough_collie_show_kennels_data( $kennel_data ) {
 		$country = rough_collie_first_uppercase( $value->Country );
 
 		printf( '<li><a href="%s">%s</a>, %s</li>',
-		esc_url('/zoek-een-kennel-of-fokker/?rc_kennelnumber=' . $value->Number ),
+		esc_url('/kennel/?rc_kennelnumber=' . $value->Number ),
 		esc_html( $value->BusinessName ),
 		esc_html( $country ) );
 	};
@@ -228,8 +228,8 @@ function rough_collie_show_single_kennel_data( $number , $kennel_data=array() ) 
 	?>
 
 	<dl>
-		<dt>Naam</dt><dd><?php echo esc_html( $name ); ?></dd>
-		<dt>Land</dt><dd><?php echo esc_html( $country ); ?></dd>
+		<dt><?php esc_html_e('Name', 'roughcollie'); ?></dt><dd><?php echo esc_html( $name ); ?></dd>
+		<dt><?php esc_html_e('Country', 'roughcollie'); ?></dt><dd><?php echo esc_html( $country ); ?></dd>
 
 		<dt>Website</dt>
 		<?php

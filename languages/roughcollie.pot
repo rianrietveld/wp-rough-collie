@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 "Project-Id-Version: Rough Collie\n"
-"POT-Creation-Date: 2020-01-04 22:04+0100\n"
+"POT-Creation-Date: 2020-01-04 22:29+0100\n"
 "PO-Revision-Date: 2020-01-04 22:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -21,15 +21,15 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 
-#: modules/collies.php:28
-msgid "Registration number: "
+#: modules/collies.php:28 modules/collies.php:127
+msgid "Registration number"
 msgstr ""
 
 #: modules/collies.php:40
 msgid "Search a Collie by name"
 msgstr ""
 
-#: modules/collies.php:42
+#: modules/collies.php:42 modules/kennels.php:68
 msgid "Search by name"
 msgstr ""
 
@@ -45,12 +45,8 @@ msgstr ""
 msgid "Nothing found"
 msgstr ""
 
-#: modules/collies.php:126
+#: modules/collies.php:126 modules/kennels.php:231
 msgid "Name"
-msgstr ""
-
-#: modules/collies.php:127
-msgid "Registration number"
 msgstr ""
 
 #: modules/collies.php:128
@@ -77,12 +73,52 @@ msgstr ""
 msgid "Pedigree"
 msgstr ""
 
+#: modules/kennels.php:25
+msgid "You seached for the kennel name: "
+msgstr ""
+
+#: modules/kennels.php:28
+msgid "You seached for the kennel name begin letter: "
+msgstr ""
+
+#: modules/kennels.php:32
+msgid "You seached for the kennels in: "
+msgstr ""
+
+#: modules/kennels.php:66
+msgid "Search a kennel or breeder by name"
+msgstr ""
+
+#: modules/kennels.php:74
+msgid "Search a kennel or breeder by begin letter"
+msgstr ""
+
+#: modules/kennels.php:86
+msgid "Search by begin letter"
+msgstr ""
+
+#: modules/kennels.php:92
+msgid "Search a kennel or breeder by country"
+msgstr ""
+
+#: modules/kennels.php:104
+msgid "Search a by country"
+msgstr ""
+
+#: modules/kennels.php:135
+msgid "No kennels found."
+msgstr ""
+
+#: modules/kennels.php:232
+msgid "Country"
+msgstr ""
+
 #: modules/zooeasy-import.php:52
-msgid "Gegevens honden en kennels importeren"
+msgid "Import data from collies and kennels."
 msgstr ""
 
 #: modules/zooeasy-import.php:63
-msgid "Gegevens in de database verwerken"
+msgid "Processing the data."
 msgstr ""
 
 #: modules/zooeasy-import.php:72
@@ -90,23 +126,35 @@ msgid "Start"
 msgstr ""
 
 #: modules/zooeasy-import.php:77
-msgid "Gegevens importeren in de database"
+msgid "Import data into the database."
 msgstr ""
 
 #: modules/zooeasy-import.php:81
-msgid "Dit kan een paar minuten duren, onderbreek het proces niet"
+msgid "This process will take a few minutes, do not interrupt it."
 msgstr ""
 
-#: modules/zooeasy-import.php:103
-msgid "Geen csv bestanden gevonden om te importeren."
+#: modules/zooeasy-import.php:102
+msgid "No CSV files found to import."
 msgstr ""
 
-#: modules/zooeasy-import.php:114
-msgid "Verwerken"
+#: modules/zooeasy-import.php:113
+msgid "Processing "
 msgstr ""
 
-#: modules/zooeasy-import.php:124
-msgid "Alle bestanden verwerkt."
+#: modules/zooeasy-import.php:123
+msgid "All files have been processed."
+msgstr ""
+
+#: modules/zooeasy-import.php:176
+msgid "is not an import file."
+msgstr ""
+
+#: modules/zooeasy-import.php:216
+msgid "has been imported and the file deleted."
+msgstr ""
+
+#: modules/zooeasy-import.php:236
+msgid "has not been removed, please remove it yourself in the media library."
 msgstr ""
 
 #. Theme Name of the plugin/theme
