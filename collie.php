@@ -3,8 +3,8 @@
  * Template Name: Collie
  *
  * @package WordPress
- * @subpackage Rough Collie
- * @since Rough Collie 1.0
+ * @subpackage Roughcollie
+ * @since Roughcollie 1.0
  */
 
 require get_stylesheet_directory() . '/modules/collies.php';

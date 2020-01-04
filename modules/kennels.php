@@ -1,14 +1,20 @@
 <?php
+/**
+ * The function for displaying the kennel information.
+ *
+ * @package WordPress
+ * @subpackage Rougcollie
+ * @since Rougcollie 1.0
+ */
+
 
 function rough_collie_get_kennelvars() {
-
 	$kennelvars = array();
 	$kennelvars['rc_kennelname']    = get_query_var( 'rc_kennelname' );
 	$kennelvars['rc_kennelletter']  = get_query_var( 'rc_kennelletter' );
 	$kennelvars['rc_kennelcountry'] = get_query_var( 'rc_kennelcountry' );
 	$kennelvars['rc_kennelnumber']  = get_query_var( 'rc_kennelnumber' );
 	return $kennelvars;
-
 }
 
 function rough_collie_get_kennel_title( $kennelvars ) {

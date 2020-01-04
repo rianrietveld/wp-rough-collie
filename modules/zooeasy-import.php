@@ -1,7 +1,12 @@
 <?php
 /**
- * Import functionality.
+ * The function for importing the  Zooeasy data.
+ *
+ * @package WordPress
+ * @subpackage Rougcollie
+ * @since Rougcollie 1.0
  */
+
 
 if ( ! is_admin() ) {
 	die();
@@ -44,7 +49,7 @@ function zooeasy_import() {
 	?> <div class="wrap"><?php
 
 	printf( '<h1 class="wp-heading-inline"%s</h1>',
-		esc_html__( 'Gegevens honden en kennels importeren', 'roughcollie' )
+		esc_html__( 'Import data from collies and kennels.', 'roughcollie' )
 	);
 
 	$upload_dir  = wp_get_upload_dir();
@@ -55,7 +60,7 @@ function zooeasy_import() {
 		if ( 'import' === $_GET['rc_action'] ) {
 
 			printf( '<h2>%s</h2>',
-				esc_html__( 'Gegevens in de database verwerken', 'roughcollie' )
+				esc_html__( 'Processing the data.', 'roughcollie' )
 			);
 
 			rough_collie_import_and_process( $upload_path );
@@ -69,11 +74,11 @@ function zooeasy_import() {
 
 		printf( '<a href="%s" class="button">%s</a>',
 			admin_url( '?page=zooeasy-import&rc_action=import' ),
-			esc_html__( 'Gegevens importeren in de database', 'roughcollie' )
+			esc_html__( 'Import data into the database.', 'roughcollie' )
 		);
 
 		printf( '<p>%s</p>',
-			esc_html__( 'Dit kan een paar minuten duren, onderbreek het proces niet', 'roughcollie' )
+			esc_html__( 'This process will take a few minutes, do not interrupt it.', 'roughcollie' )
 		);
 
 	}
@@ -95,7 +100,7 @@ function rough_collie_import_and_process( $upload_path ) {
 	$zooeasy_files = glob( $upload_path . '/*.{csv}', GLOB_BRACE );
 
 	if ( empty( $zooeasy_files ) ) {
-		return esc_html__( 'Geen csv bestanden gevonden om te importeren.', 'roughcollie' );
+		return esc_html__( 'No CSV files found to import.', 'roughcollie' );
 	}
 
 	// Truncate rough_animal and rough_contact.
@@ -106,7 +111,7 @@ function rough_collie_import_and_process( $upload_path ) {
 	foreach ( $zooeasy_files as $zooeasy_file ) {
 
 		printf( '<p>%s: %s</p>',
-			esc_html__( 'Verwerken', 'roughcollie' ),
+			esc_html__( 'Processing ', 'roughcollie' ),
 			esc_url( $zooeasy_file )
 		);
 
@@ -116,7 +121,7 @@ function rough_collie_import_and_process( $upload_path ) {
 		}
 
 	}
-	return esc_html__( 'Alle bestanden verwerkt.', 'roughcollie' );
+	return esc_html__( 'All files have been processed.', 'roughcollie' );
 	}
 
 
@@ -139,7 +144,7 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 
 	global $wpdb;
 
-	// determine which file and columns
+	// Determine which file and columns.
 	if ( stristr( $zooeasy_file, 'animal') ) {
 
 		$column_names = array (
@@ -168,7 +173,7 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 		$table        = "rough_contact";
 
 	} else {
-
+		
 		return ( "<p><strong>" . $zooeasy_file . '</strong> is geen invoerbestand</p>' );
 
 	}
@@ -216,8 +221,8 @@ function rough_collie_remove_csv_attachment( $zooeasy_file ) {
 
 	$base          = basename( $zooeasy_file );
 	$wp_upload_dir = wp_upload_dir();
-	$filurl        = $wp_upload_dir['url'] . "/" . $base;
-	$csv_id        = attachment_url_to_postid( $filurl );
+	$fileurl        = $wp_upload_dir['url'] . "/" . $base;
+	$csv_id        = attachment_url_to_postid( $fileurl );
 
 	if ( $csv_id > 0 ) {
 		wp_delete_attachment ( $csv_id, true );
