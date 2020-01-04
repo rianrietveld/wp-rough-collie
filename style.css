@@ -1,13 +1,13 @@
 /*
 Theme Name: 	Rough Collie
-Author: Rian 	Rietveld
-Author URI: 	https://rianrietveld.com/
-Description: 	Custom Made Child Theme for Rough Collie.
-Template:		twentyfifteen
-Version: 		1.0
-License: 		GNU General Public License v2 or later
-License URI: 	http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: right: oughcollie
+Author: Rian Rietveld
+Author URI: https://rianrietveld.com/
+Description: Custom Made Child Theme for Rough Collie.
+Template: twentyfifteen
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: roughcollie
 
 This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
@@ -64,8 +64,9 @@ dl:after {
 }
 
 .entry-title,
-.widecolumn h2 {
-  font-size: 1.5em;
+.widecolumn h2,
+.entry-content h2 {
+  font-size: 1.4em;
   line-height: 1.2308;
   margin-bottom: 1.2308em;
 }
@@ -83,5 +84,17 @@ dl:after {
 .site-title a:focus {
   text-decoration: underline;
   color: #333;
+}
+
+@media screen and (min-width: 77.5em) {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
 }
 
