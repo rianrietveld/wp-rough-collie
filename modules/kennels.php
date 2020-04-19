@@ -33,15 +33,19 @@ function rough_collie_get_kennel_title( $kennelvars ) {
 
 	$title = get_the_title();
 
+	if ( ! empty( $kennelvars['rc_kennelnumber'] )  ) {
+		$title = rough_collie_get_kennel_by_number( $kennelvars['rc_kennelnumber'] );
+	}
+
 	if ( ! empty( $kennelvars['rc_kennelname'] )  ) {
-		$title = __("You searched for the kennel name: ", 'roughcollie') . $kennelvars['rc_kennelname'];
+		$title = __("You searched for the breeder: ", 'roughcollie') . $kennelvars['rc_kennelname'];
 	}
 	if ( ! empty( $kennelvars['rc_kennelletter'] )  ) {
-		$title = __("You searched for the kennel name begin letter: ", 'roughcollie') . $kennelvars['rc_kennelletter'];
+		$title = __("You searched for breeders with the first letter: ", 'roughcollie') . $kennelvars['rc_kennelletter'];
 	}
 
 	if ( ! empty( $kennelvars['rc_kennelcountry'] )  ) {
-		$title = __("You searched for the kennels in: ", 'roughcollie') . $kennelvars['rc_kennelcountry'];
+		$title = __("You searched for breeders in: ", 'roughcollie') . $kennelvars['rc_kennelcountry'];
 	}
 
 	return $title;
@@ -74,7 +78,7 @@ function rough_collie_show_kennel_search_forms() {
 
 	<form action="/kennel/" method="post" class="rc-form">
 		<div>
-			<label for="rc_kennelname"><?php esc_html_e('Search a kennel or breeder by name', 'roughcollie'); ?></label><br />
+			<label for="rc_kennelname"><?php esc_html_e('Search a breeder by name', 'roughcollie'); ?></label><br />
 			<input type="text" name="rc_kennelname" id="rc_kennelname"><br />
 			<input type="submit" name="submit" value="<?php esc_html_e('Search by name', 'roughcollie'); ?>" /><br />
 		</div>
@@ -82,7 +86,7 @@ function rough_collie_show_kennel_search_forms() {
 
 	<form action="/kennel/" method="post" class="rc-form">
 		<div>
-			<label for="rc_kennelletter"><?php esc_html_e('Search a kennel or breeder by begin letter', 'roughcollie'); ?></label><br />
+			<label for="rc_kennelletter"><?php esc_html_e('Search a breeder by first letter', 'roughcollie'); ?></label><br />
 			<select name="rc_kennelletter" id="rc_kennelletter">
 				<?php
 
@@ -100,7 +104,7 @@ function rough_collie_show_kennel_search_forms() {
 
 	<form action="/kennel/" method="post" class="rc-form">
 		<div>
-			<label for="rc_kennelcountry"><?php esc_html_e('Search a kennel or breeder by country', 'roughcollie'); ?></label><br />
+			<label for="rc_kennelcountry"><?php esc_html_e('Search a breeder by country', 'roughcollie'); ?></label><br />
 			<select name="rc_kennelcountry" id="rc_kennelcountry">
 				<?php
 
@@ -151,6 +155,17 @@ function rough_collie_show_kennels( $kennelvars ) {
 
 }
 
+function rough_collie_get_kennel_by_number( $number ) {
+
+	global $wpdb;
+
+	$number      = sanitize_text_field( $number );
+	$kennel_name = $wpdb->get_row( "SELECT BusinessName FROM rough_contact WHERE Number = '$number'" );
+
+	return $kennel_name->BusinessName;
+
+}
+
 
 function rough_collie_get_kennel_by_name( $name ) {
 
@@ -172,6 +187,10 @@ function rough_collie_get_kennel_by_letter( $letter ) {
 
 	$counter = 0;
 	foreach ( $data as $key => $value ) {
+
+		if ( empty( $value->BusinessName  ) ) {
+			continue;
+		}
 
 		$first = html_entity_decode( $value->BusinessName );
 		$first = mb_substr( $first, 0, 1 );
