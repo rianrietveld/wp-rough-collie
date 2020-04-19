@@ -123,7 +123,7 @@ function rough_collie_show_data( $animal_data ) {
 	?>
 
 	<dl>
-		<dt><?php esc_html_e('Name', 'roughcollie'); ?></dt><dd><?php echo esc_html( $name ); ?></dd>
+		<dt><?php esc_html_e('Name', 'roughcollie'); ?></dt><dd><?php echo esc_html( $name['name'] ); ?></dd>
 		<dt><?php esc_html_e('Registration number', 'roughcollie'); ?></dt><dd><?php echo esc_html( $number ); ?></dd>
 		<dt><?php esc_html_e('Colour', 'roughcollie'); ?></dt><dd><?php echo esc_html( $color ); ?></dd>
 		<dt><?php esc_html_e('Sex', 'roughcollie'); ?></dt><dd><?php echo esc_html( $gender ); ?></dd>
@@ -183,10 +183,10 @@ function rough_collie_show_data( $animal_data ) {
 
 
 
-		?><h2><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name ); ?></h2>
+		?><h2><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name['name'] ); ?></h2>
 
 		<table class="pedigree_table">
-			<caption class="screen-reader-text"><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name ); ?></caption>
+			<caption class="screen-reader-text"><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name['name'] ); ?></caption>
 			<tr class="screen-reader-text">
 				<th><?php esc_html_e('First generation', 'roughcollie'); ?></th>
 				<th><?php esc_html_e('Second generation', 'roughcollie'); ?></th>
@@ -294,14 +294,19 @@ function rough_collie_compose_animal_name( $animal_data ) {
 		return "-";
 	}
 
-	$ch = "";
+	$data  = array();
+	$ch    = "";
+	$class = "";
+
 	if ( ! empty( $animal_data->TitleInFrontOfName ) ){
-		$ch = ( $animal_data->TitleInFrontOfName === "-"  ? "" : $animal_data->TitleInFrontOfName );
+		$ch    = ( $animal_data->TitleInFrontOfName === "-"  ? "" : $animal_data->TitleInFrontOfName );
+		$class = 'class=champion';
 	}
 
-	$name = $ch . " " . $animal_data->Name;
+	$data['name']  = $ch . " " . $animal_data->Name;
+	$data['class'] = $class;
 
-	return $name;
+	return $data;
 
 }
 
@@ -317,10 +322,11 @@ function rough_collie_animal_link_data( $animal_data, $rowspan, $level ) {
 	$name  = rough_collie_compose_animal_name( $animal_data );
 	$url   = site_url() . '/collie/?rc_collienumber='  . $animal_data->RegistrationNumber;
 
-	printf( '<td %s><a href="%s">%s</a></td>',
+	printf( '<td %s %s><a href="%s">%s</a></td>',
+			esc_attr( $name['class'] ),
 			esc_attr( $rowspan ),
 			esc_url( $url ),
-			esc_html( $name )
+			esc_html( $name['name'] )
 		);
 
 	return;

@@ -90,6 +90,11 @@ dl:after {
 	vertical-align: middle;
 }
 
+.pedigree_table td.champion a {
+	color: #008b8b;
+	font-weight: 700;
+}
+
 @media screen and (min-width: 77.5em) {
   body,
   button,
