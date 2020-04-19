@@ -185,7 +185,14 @@ function rough_collie_show_data( $animal_data ) {
 
 		?><h2><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name ); ?></h2>
 
-		<table id="pedigree_tabel">
+		<table class="pedigree_table">
+			<caption class="screen-reader-text"><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name ); ?></caption>
+			<tr class="screen-reader-text">
+				<th><?php esc_html_e('First generation', 'roughcollie'); ?></th>
+				<th><?php esc_html_e('Second generation', 'roughcollie'); ?></th>
+				<th><?php esc_html_e('Third generation', 'roughcollie'); ?></th>
+				<th><?php esc_html_e('Fourth generation', 'roughcollie'); ?></th>
+			</tr>
 			<tr>
 				<?php rough_collie_animal_link_data( $father, 'rowspan=8', 'F' ) ?>
 				<?php rough_collie_animal_link_data( $fatherF, 'rowspan=4', 'FF' ) ?>

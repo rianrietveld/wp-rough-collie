@@ -86,6 +86,10 @@ dl:after {
   color: #333;
 }
 
+.pedigree_table td {
+	vertical-align: middle;
+}
+
 @media screen and (min-width: 77.5em) {
   body,
   button,
