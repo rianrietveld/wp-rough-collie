@@ -123,6 +123,7 @@ function rough_collie_show_data( $animal_data ) {
 
 	<?php
 
+
 	// Pedigree.
 	$mother_id  = $animal_data->MotherRegistrationNumber;
 	$father_id  = $animal_data->FatherRegistrationNumber;
@@ -130,45 +131,45 @@ function rough_collie_show_data( $animal_data ) {
 	if ( $mother_id !== "" || $father_id !== ""  ) {
 
 		// First column.
-		$father  = rough_collie_get_animal_by_number( $father_id );
-		$mother  = rough_collie_get_animal_by_number( $mother_id );
+		$father  = rough_collie_get_animal_by_number( $animal_data, 'FatherRegistrationNumber' );
+		$mother  = rough_collie_get_animal_by_number( $animal_data, 'MotherRegistrationNumber' );
 
 		// Second column.
-		$fatherF  = rough_collie_get_animal_by_number( $father->FatherRegistrationNumber );
-		$fatherM  = rough_collie_get_animal_by_number( $father->MotherRegistrationNumber );
+		$fatherF  = rough_collie_get_animal_by_number( $father,'FatherRegistrationNumber' );
+		$fatherM  = rough_collie_get_animal_by_number( $father,'MotherRegistrationNumber' );
 
-		$motherF  = rough_collie_get_animal_by_number( $mother->FatherRegistrationNumber );
-		$motherM  = rough_collie_get_animal_by_number( $mother->MotherRegistrationNumber );
+		$motherF  = rough_collie_get_animal_by_number( $mother,'FatherRegistrationNumber' );
+		$motherM  = rough_collie_get_animal_by_number( $mother,'MotherRegistrationNumber' );
 
 		// Third column.
-		$fatherFF  = rough_collie_get_animal_by_number( $fatherF->FatherRegistrationNumber );
-		$fatherFM  = rough_collie_get_animal_by_number( $fatherF->MotherRegistrationNumber );
-		$fatherMF  = rough_collie_get_animal_by_number( $fatherM->FatherRegistrationNumber );
-		$fatherMM  = rough_collie_get_animal_by_number( $fatherM->MotherRegistrationNumber );
+		$fatherFF  = rough_collie_get_animal_by_number( $fatherF,'FatherRegistrationNumber' );
+		$fatherFM  = rough_collie_get_animal_by_number( $fatherF,'MotherRegistrationNumber' );
+		$fatherMF  = rough_collie_get_animal_by_number( $fatherM,'FatherRegistrationNumber' );
+		$fatherMM  = rough_collie_get_animal_by_number( $fatherM,'MotherRegistrationNumber' );
 
-		$motherFF  = rough_collie_get_animal_by_number( $motherF->FatherRegistrationNumber );
-		$motherFM  = rough_collie_get_animal_by_number( $motherF->MotherRegistrationNumber );
-		$motherMF  = rough_collie_get_animal_by_number( $motherM->FatherRegistrationNumber );
-		$motherMM  = rough_collie_get_animal_by_number( $motherM->MotherRegistrationNumber );
+		$motherFF  = rough_collie_get_animal_by_number( $motherF,'FatherRegistrationNumber' );
+		$motherFM  = rough_collie_get_animal_by_number( $motherF,'MotherRegistrationNumber' );
+		$motherMF  = rough_collie_get_animal_by_number( $motherM,'FatherRegistrationNumber' );
+		$motherMM  = rough_collie_get_animal_by_number( $motherM,'MotherRegistrationNumber' );
 
 		// Fourth column.
-		$fatherFFF = rough_collie_get_animal_by_number( $fatherFF->FatherRegistrationNumber );
-		$fatherFFM = rough_collie_get_animal_by_number( $fatherFF->MotherRegistrationNumber );
-		$fatherFMF = rough_collie_get_animal_by_number( $fatherFM->FatherRegistrationNumber );
-		$fatherFMM = rough_collie_get_animal_by_number( $fatherFM->MotherRegistrationNumber );
-		$fatherMFF = rough_collie_get_animal_by_number( $fatherMF->FatherRegistrationNumber );
-		$fatherMFM = rough_collie_get_animal_by_number( $fatherMF->MotherRegistrationNumber );
-		$fatherMMF = rough_collie_get_animal_by_number( $fatherMM->FatherRegistrationNumber );
-		$fatherMMM = rough_collie_get_animal_by_number( $fatherMM->MotherRegistrationNumber );
+		$fatherFFF = rough_collie_get_animal_by_number( $fatherFF,'FatherRegistrationNumber' );
+		$fatherFFM = rough_collie_get_animal_by_number( $fatherFF,'MotherRegistrationNumber' );
+		$fatherFMF = rough_collie_get_animal_by_number( $fatherFM,'FatherRegistrationNumber' );
+		$fatherFMM = rough_collie_get_animal_by_number( $fatherFM,'MotherRegistrationNumber' );
+		$fatherMFF = rough_collie_get_animal_by_number( $fatherMF,'FatherRegistrationNumber' );
+		$fatherMFM = rough_collie_get_animal_by_number( $fatherMF,'MotherRegistrationNumber' );
+		$fatherMMF = rough_collie_get_animal_by_number( $fatherMM,'FatherRegistrationNumber' );
+		$fatherMMM = rough_collie_get_animal_by_number( $fatherMM,'MotherRegistrationNumber' );
 
-		$motherFFF = rough_collie_get_animal_by_number( $fatherFF->FatherRegistrationNumber );
-		$motherFFM = rough_collie_get_animal_by_number( $fatherFF->MotherRegistrationNumber );
-		$motherFMF = rough_collie_get_animal_by_number( $fatherFM->FatherRegistrationNumber );
-		$motherFMM = rough_collie_get_animal_by_number( $fatherFM->MotherRegistrationNumber );
-		$motherMFF = rough_collie_get_animal_by_number( $fatherMF->FatherRegistrationNumber );
-		$motherMFM = rough_collie_get_animal_by_number( $fatherMF->MotherRegistrationNumber );
-		$motherMMF = rough_collie_get_animal_by_number( $fatherMM->FatherRegistrationNumber );
-		$motherMMM = rough_collie_get_animal_by_number( $fatherFM->MotherRegistrationNumber );
+		$motherFFF = rough_collie_get_animal_by_number( $fatherFF,'FatherRegistrationNumber' );
+		$motherFFM = rough_collie_get_animal_by_number( $fatherFF,'MotherRegistrationNumber' );
+		$motherFMF = rough_collie_get_animal_by_number( $fatherFM,'FatherRegistrationNumber' );
+		$motherFMM = rough_collie_get_animal_by_number( $fatherFM,'MotherRegistrationNumber' );
+		$motherMFF = rough_collie_get_animal_by_number( $fatherMF,'FatherRegistrationNumber' );
+		$motherMFM = rough_collie_get_animal_by_number( $fatherMF,'MotherRegistrationNumber' );
+		$motherMMF = rough_collie_get_animal_by_number( $fatherMM,'FatherRegistrationNumber' );
+		$motherMMM = rough_collie_get_animal_by_number( $fatherFM,'MotherRegistrationNumber' );
 
 
 
@@ -263,15 +264,19 @@ function rough_collie_get_breeder_by_number( $number ) {
 
 }
 
-function rough_collie_get_animal_by_number( $number ) {
+function rough_collie_get_animal_by_number( $number, $value = NULL ) {
 
 	if ( empty( $number ) || $number === "" ) {
 		return false;
 	}
 
 	global $wpdb;
+	if ( NULL === $value ) {
+		$number      = sanitize_text_field( $number);
+	} else {
+		$number      = sanitize_text_field( $number->$value );
+	}
 
-	$number      = sanitize_text_field( $number );
 	$animal_data = $wpdb->get_row( "SELECT * FROM rough_animal WHERE RegistrationNumber = '$number'" );
 
 	return $animal_data;
@@ -301,7 +306,14 @@ function rough_collie_compose_animal_name( $animal_data ) {
 
 function rough_collie_animal_link_data( $animal_data, $rowspan, $level ) {
 
-	if ( empty( $animal_data->Name  || $animal_data ===  false) ) {
+	if ( empty( $animal_data ) ) {
+		printf( '<td %s></td>',
+			esc_attr( $rowspan )
+		);
+		return;
+	}
+
+	if ( empty( $animal_data->Name ) ) {
 		printf( '<td %s></td>',
 			esc_attr( $rowspan )
 		);
