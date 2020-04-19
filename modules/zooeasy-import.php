@@ -92,19 +92,21 @@ function zooeasy_import() {
  *
  * @param $upload_path string Upload path import files.
  *
- * @return string End process.
+ * @return void.
  */
 function rough_collie_import_and_process( $upload_path ) {
 
 	$zooeasy_files = glob( $upload_path . '/*.{csv}', GLOB_BRACE );
 
-	if ( empty( $zooeasy_files ) ) {
-		return esc_html__( 'No CSV files found to import.', 'roughcollie' );
+	// Checks on existing CSV files.
+	if ( empty( $zooeasy_files ) || 0 === count( $zooeasy_files ) ) {
+		esc_html_e( 'No CSV files found to import.', 'roughcollie' );
+		return;
 	}
 
 	// Truncate rough_animal and rough_contact.
 	global $wpdb;
-	//$wpdb->query('TRUNCATE TABLE rough_animal');
+	$wpdb->query('TRUNCATE TABLE rough_animal');
 	$wpdb->query('TRUNCATE TABLE rough_contact');
 
 	foreach ( $zooeasy_files as $zooeasy_file ) {
@@ -120,8 +122,10 @@ function rough_collie_import_and_process( $upload_path ) {
 		}
 
 	}
-	return esc_html__( 'All files have been processed.', 'roughcollie' );
-	}
+
+	esc_html_e( 'All files have been processed.', 'roughcollie' );
+
+}
 
 
 function rough_collie_get_key_by_name( $data_rows_names, $csv_head_names ) {
@@ -147,12 +151,13 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 	if ( stristr( $zooeasy_file, 'animal') ) {
 
 		$column_names = array (
-			"RegistrationNumber",           // IdentificatieCombinatie      2468/97
-			"Gender",                       // Geslacht                     Teef
-			"Name",                         // Naam                         Sheranda's Royal Guard Dream
+			"RegistrationNumber",           // IdentificatieCombinatie      2468/97.
+			"Gender",                       // Geslacht                     Teef.
+			"Name",                         // Naam                         Sheranda's Royal Guard Dream.
 			"TitleInFrontOfName",           // IdentificatieTitelVoorNaam   Ch.
-			"Color",                        // IdentificatieKleur           Sable
-			"BreederNumber",                // IdentificatieFokker  // in contacts
+			"Color",                        // IdentificatieKleur           Sable.
+			"BreederNumber",                // IdentificatieFokker          // in contacts.
+			"OwnerNumber",                  // IdentificatieEigenaar        // in contacts.
 			"FatherRegistrationNumber",     // RegistratienummerVader
 			"MotherRegistrationNumber",     // RegistratienummerMoeder
 			"Born",                         // Geboortejaar

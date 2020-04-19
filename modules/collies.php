@@ -103,22 +103,10 @@ function rough_collie_show_data( $animal_data ) {
 	$gender    = $animal_data->Gender;
 	$born      = $animal_data->Born;
 	$deceased  = $animal_data->Deceased;
-	$breeder   = $animal_data->BreederNumber;
+	$breeder   = rough_collie_contact_data( $animal_data->BreederNumber, 1 );
+	$owner     = rough_collie_contact_data( $animal_data->OwnerNumber, 0 );
 
-	if ( $breeder !==  "-" ) {
-		$breeder_data = rough_collie_get_breeder_by_number( $breeder );
-		if ( empty ( $breeder_data ) ) {
-			$breeder = "-";
-		} else {
-			$breeder_name = $breeder_data->BusinessName;
-			$breeder_url  = site_url() . '/kennel/?rc_kennelnumber=' . $breeder;
-			$breeder = sprintf(
-				'<a href="%s">%s</a>',
-						esc_url( $breeder_url ),
-						esc_html($breeder_name)
-			);
-		}
-	}
+	echo $animal_data->OwnerNumber;
 
 	?>
 
@@ -129,7 +117,9 @@ function rough_collie_show_data( $animal_data ) {
 		<dt><?php esc_html_e('Sex', 'roughcollie'); ?></dt><dd><?php echo esc_html( $gender ); ?></dd>
 		<dt><?php esc_html_e('Date of birth', 'roughcollie'); ?></dt><dd><?php echo esc_html( $born ); ?></dd>
 		<dt><?php esc_html_e('Deceased on', 'roughcollie'); ?></dt><dd><?php echo esc_html( $deceased ); ?></dd>
-		<dt><?php esc_html_e('Kennel or Breeder', 'roughcollie'); ?></dt><dd><?php echo $breeder; ?></dd>
+		<dt><?php esc_html_e('Breeder', 'roughcollie'); ?></dt><dd><?php echo $breeder; ?></dd>
+		<dt><?php esc_html_e('Owner', 'roughcollie'); ?></dt><dd><?php echo $owner; ?></dd>
+
 	</dl>
 
 	<?php
@@ -331,4 +321,33 @@ function rough_collie_animal_link_data( $animal_data, $rowspan, $level ) {
 
 	return;
 
+}
+
+function rough_collie_contact_data( $contact_id, $kennel ) {
+
+	if ( $contact_id ===  "-" ) {
+		return "-";
+	}
+
+	$contact_data = rough_collie_get_breeder_by_number( $contact_id );
+
+	if ( empty ( $contact_data ) ) {
+
+		return "-";
+
+	} else {
+
+		$contact_text = $contact_data->BusinessName;
+
+		if ( $kennel ) {
+			$url  = site_url() . '/kennel/?rc_kennelnumber=' . $contact_id;
+			$contact_text = sprintf(
+				'<a href="%s">%s</a>',
+				esc_url( $url ),
+				esc_html( $contact_data->BusinessName )
+			);
+		}
+	}
+
+	return $contact_text;
 }
