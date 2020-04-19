@@ -212,9 +212,8 @@ function rough_collie_get_kennel_by_country( $country ) {
 	global $wpdb;
 
 	$country      = sanitize_text_field( $country );
-	$kennel_data = $wpdb->get_results( "SELECT BusinessName, Number, Country, Homepage FROM rough_contact WHERE Country = '$country'" );
+	$kennel_data = $wpdb->get_results( "SELECT BusinessName, Name, Number, Country, Homepage FROM rough_contact WHERE Country = '$country'" );
 
-	asort($kennel_data );
 	return $kennel_data;
 
 }
@@ -222,15 +221,21 @@ function rough_collie_get_kennel_by_country( $country ) {
 function rough_collie_show_kennels_data( $kennel_data ) {
 
 
+
+
 	?><ul><?php
 	foreach ( $kennel_data as $key => $value ) {
 
-		$country = rough_collie_first_uppercase( $value->Country );
+		$name = $value->BusinessName;
+
+		if ( strlen( $name ) < 2) {
+			continue;
+		}
 
 		printf( '<li><a href="%s">%s</a>, %s</li>',
 		esc_url('/kennel/?rc_kennelnumber=' . $value->Number ),
-		esc_html( $value->BusinessName ),
-		esc_html( $country ) );
+		esc_attr( $name ),
+		esc_attr( $value->Country ) );
 	};
 	?></ul><?php
 }

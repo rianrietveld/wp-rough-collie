@@ -171,6 +171,7 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 		$column_names = array (
 			'Number',
 			'BusinessName',
+			'Name',
 			"Homepage",
 			"Country"
 		);
@@ -218,7 +219,7 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 
 	};
 
-	$message = "<p>The data from <strong>" . $zooeasy_file . "</strong>" . __( 'has been imported and the file deleted.', 'roughcollie' ) . "</p>";
+	$message = "<p>The data from <strong>" . $zooeasy_file . "</strong> " . __( 'has been imported and the file deleted.', 'roughcollie' ) . "</p>";
 
 	return ($message );
 
