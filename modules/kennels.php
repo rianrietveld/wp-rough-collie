@@ -8,6 +8,11 @@
  */
 
 
+/**
+ * Setting Query vars.
+ *
+ * @return array Query vars.
+ */
 function rough_collie_get_kennelvars() {
 	$kennelvars = array();
 	$kennelvars['rc_kennelname']    = get_query_var( 'rc_kennelname' );
@@ -17,6 +22,13 @@ function rough_collie_get_kennelvars() {
 	return $kennelvars;
 }
 
+/**
+ * Get the template title.
+ *
+ * @param $kennelvars string Type of search and result.
+ *
+ * @return string Title.
+ */
 function rough_collie_get_kennel_title( $kennelvars ) {
 
 	$title = get_the_title();
@@ -40,7 +52,6 @@ function rough_collie_show_kennel_search_forms() {
 	$kennel_data     = rough_collie_kennel_data();
 	$country_options = array();
 	$letter_options  = array();
-
 
 	// Options for countries and letters selects.
 	foreach( $kennel_data as $key => $value ) {
@@ -113,7 +124,9 @@ function rough_collie_kennel_data() {
 
 	global $wpdb;
 
-	$kennel_data = $wpdb->get_results( "SELECT BusinessName, Country FROM rough_contact" );
+	$kennel_data = $wpdb->get_results( "SELECT BusinessName, Number, Country, Homepage FROM rough_contact" );
+
+	asort( $kennel_data );
 
 	return $kennel_data;
 
@@ -134,14 +147,7 @@ function rough_collie_show_kennels( $kennelvars ) {
 		return;
 	}
 
-
-	if ( count( $kennel_data ) === 1 ) {
-		rough_collie_show_single_kennel_data( 0, $kennel_data  );
-	} else {
-		rough_collie_show_kennels_data( $kennel_data );
-	}
-
-
+	rough_collie_show_kennels_data( $kennel_data );
 
 }
 
@@ -151,8 +157,9 @@ function rough_collie_get_kennel_by_name( $name ) {
 	global $wpdb;
 
 	$name      = sanitize_text_field( $name );
-	$kennel_data = $wpdb->get_results( "SELECT * FROM rough_contact WHERE BusinessName = '$name'" );
+	$kennel_data = $wpdb->get_results( "SELECT BusinessName, Number, Country, Homepage FROM rough_contact WHERE BusinessName = '$name'" );
 
+	asort($kennel_data );
 	return $kennel_data;
 
 }
@@ -161,7 +168,7 @@ function rough_collie_get_kennel_by_letter( $letter ) {
 
 	global $wpdb;
 
-	$data = $wpdb->get_results( "SELECT * FROM rough_contact" );
+	$data = $wpdb->get_results( "SELECT BusinessName, Number, Country, Homepage FROM rough_contact" );
 
 	$counter = 0;
 	foreach ( $data as $key => $value ) {
@@ -175,6 +182,8 @@ function rough_collie_get_kennel_by_letter( $letter ) {
 		}
 	}
 
+	asort($kennel_data );
+
 	return $kennel_data;
 
 }
@@ -184,15 +193,16 @@ function rough_collie_get_kennel_by_country( $country ) {
 	global $wpdb;
 
 	$country      = sanitize_text_field( $country );
-	$kennel_data = $wpdb->get_results( "SELECT * FROM rough_contact WHERE Country = '$country'" );
+	$kennel_data = $wpdb->get_results( "SELECT BusinessName, Number, Country, Homepage FROM rough_contact WHERE Country = '$country'" );
 
+	asort($kennel_data );
 	return $kennel_data;
 
 }
 
 function rough_collie_show_kennels_data( $kennel_data ) {
 
-	//todo: nog sorteren op kennelnaam
+
 	?><ul><?php
 	foreach ( $kennel_data as $key => $value ) {
 
@@ -267,12 +277,13 @@ function rough_collie_get_collies_by_kennel( $number ) {
 
 	global $wpdb;
 	$number      = sanitize_text_field( $number );
-	$collie_data = $wpdb->get_results( "SELECT * FROM rough_animal WHERE BreederNumber = '$number'" );
+	$collie_data = $wpdb->get_results( "SELECT Name, RegistrationNumber FROM rough_animal WHERE BreederNumber = '$number'" );
 
 	if ( empty( $collie_data ) ) {
 		return false;
 	}
-	//todo: nog sorteren op kennelnaam
+
+	asort( $collie_data );
 
 	?>
 	<h2>Collies</h2>

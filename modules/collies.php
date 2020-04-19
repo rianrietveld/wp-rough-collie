@@ -8,6 +8,7 @@
  */
 
 
+
 function rough_collie_get_collievars() {
 
 	$collievars = array();
@@ -105,8 +106,6 @@ function rough_collie_show_data( $animal_data ) {
 	$deceased  = $animal_data->Deceased;
 	$breeder   = rough_collie_contact_data( $animal_data->BreederNumber, 1 );
 	$owner     = rough_collie_contact_data( $animal_data->OwnerNumber, 0 );
-
-	echo $animal_data->OwnerNumber;
 
 	?>
 
