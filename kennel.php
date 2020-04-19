@@ -29,6 +29,7 @@ get_header(); ?>
 				<div class="entry-content">
 
 					<?php
+
 					if ( empty( $kennelvars['rc_kennelname'] ) &&
 					     empty( $kennelvars['rc_kennelletter'] ) &&
 					     empty( $kennelvars['rc_kennelcountry'] ) &&

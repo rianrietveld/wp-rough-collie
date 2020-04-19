@@ -121,8 +121,6 @@ function rough_collie_kennel_data() {
 
 function rough_collie_show_kennels( $kennelvars ) {
 
-	$kennel_data = array();
-
 	if ( ! empty( $kennelvars['rc_kennelname'] ) ) {
 		$kennel_data = rough_collie_get_kennel_by_name( $kennelvars['rc_kennelname'] );
 	} elseif( ! empty( $kennelvars['rc_kennelletter'] ) ) {
@@ -135,6 +133,7 @@ function rough_collie_show_kennels( $kennelvars ) {
 		esc_html_e('No kennels found.', 'roughcollie');
 		return;
 	}
+
 
 	if ( count( $kennel_data ) === 1 ) {
 		rough_collie_show_single_kennel_data( 0, $kennel_data  );
@@ -164,13 +163,15 @@ function rough_collie_get_kennel_by_letter( $letter ) {
 
 	$data = $wpdb->get_results( "SELECT * FROM rough_contact" );
 
+	$counter = 0;
 	foreach ( $data as $key => $value ) {
 
 		$first = html_entity_decode( $value->BusinessName );
 		$first = mb_substr( $first, 0, 1 );
 
 		if ( $first === $letter ) {
-			$kennel_data[ $key ] = $value;
+			$kennel_data[ $counter ] = $value;
+			$counter++;
 		}
 	}
 
@@ -237,7 +238,7 @@ function rough_collie_show_single_kennel_data( $number , $kennel_data=array() ) 
 		if ( $url === "http://www." ||  $url === "" ) {
 			?><dd>- </dd><?php
 		} else {
-			// Cleanup url
+			// Cleanup url.
 			$input = trim( $url, '/' );
 			if ( !preg_match('#^http(s)?://#', $input) ) {
 				$input = 'http://' . $input;
@@ -252,7 +253,44 @@ function rough_collie_show_single_kennel_data( $number , $kennel_data=array() ) 
 		?>
 	</dl>
 
+	<?php rough_collie_get_collies_by_kennel( $number ) ?>
+
 	<?php
+}
+
+
+function rough_collie_get_collies_by_kennel( $number ) {
+
+	if ( empty( $number ) || $number === "" ) {
+	 return false;
+	}
+
+	global $wpdb;
+	$number      = sanitize_text_field( $number );
+	$collie_data = $wpdb->get_results( "SELECT * FROM rough_animal WHERE BreederNumber = '$number'" );
+
+	if ( empty( $collie_data ) ) {
+		return false;
+	}
+	//todo: nog sorteren op kennelnaam
+
+	?>
+	<h2>Collies</h2>
+	<ul>
+	<?php
+
+	foreach ( $collie_data as $key => $value ) {
+
+		printf( '<li><a href="%s">%s</a></li>',
+			esc_url('/collie/?rc_collienumber=' . $value->RegistrationNumber ),
+			esc_html( $value->Name ));
+	};
+
+	?></ul><?php
+
+	return $collie_data;
+
+
 }
 
 function rough_collie_compareASCII( $a, $b ) {
