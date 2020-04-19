@@ -214,6 +214,8 @@ function rough_collie_get_kennel_by_country( $country ) {
 	$country      = sanitize_text_field( $country );
 	$kennel_data = $wpdb->get_results( "SELECT BusinessName, Name, Number, Country, Homepage FROM rough_contact WHERE Country = '$country'" );
 
+	asort( $kennel_data );
+
 	return $kennel_data;
 
 }
