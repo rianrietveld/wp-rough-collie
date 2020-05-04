@@ -7,8 +7,11 @@
  * @since Rougcollie 1.0
  */
 
-
-
+/**
+ * Add query vars.
+ *
+ * @return array query_vars
+ */
 function rough_collie_get_collievars() {
 
 	$collievars = array();
@@ -18,6 +21,13 @@ function rough_collie_get_collievars() {
 
 }
 
+/**
+ * Defines H1 title.
+ *
+ * @param $collievars
+ *
+ * @return mixed|string H1 title.
+ */
 function rough_collie_get_collie_title( $collievars ) {
 
 	$title = get_the_title();
@@ -32,6 +42,9 @@ function rough_collie_get_collie_title( $collievars ) {
 	return $title;
 }
 
+/**
+ *
+ */
 function rough_collie_show_search_forms() {
 
 	?>
@@ -56,6 +69,9 @@ function rough_collie_show_search_forms() {
 
 }
 
+/**
+ * @param $collievars
+ */
 function rough_collie_show_collie( $collievars ) {
 
 	$animal_data = array();
@@ -74,6 +90,11 @@ function rough_collie_show_collie( $collievars ) {
 	rough_collie_show_data( $animal_data );
 }
 
+/**
+ * @param $name
+ *
+ * @return array|object|void|null
+ */
 function rough_collie_get_animal_by_name( $name ) {
 
 	global $wpdb;
@@ -84,6 +105,9 @@ function rough_collie_get_animal_by_name( $name ) {
 	return $animal_data;
 }
 
+/**
+ * @param $animal_data
+ */
 function rough_collie_show_data( $animal_data ) {
 
 	foreach ( $animal_data as $key => $value ) {
@@ -173,7 +197,7 @@ function rough_collie_show_data( $animal_data ) {
 
 
 
-		?><h2><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name['name'] ); ?></h2>
+		?><h2><?php esc_html_e('Pedigree', 'roughcollie'); ?>: <?php echo esc_html( $name['name'] ); ?></h2>
 
 		<table class="pedigree_table">
 			<caption class="screen-reader-text"><?php esc_html_e('Pedigree', 'roughcollie'); ?> <?php echo esc_html( $name['name'] ); ?></caption>
@@ -253,6 +277,11 @@ function rough_collie_show_data( $animal_data ) {
 
 }
 
+/**
+ * @param $number
+ *
+ * @return array|object|void|null
+ */
 function rough_collie_get_breeder_by_number( $number ) {
 
 	global $wpdb;
@@ -264,6 +293,12 @@ function rough_collie_get_breeder_by_number( $number ) {
 
 }
 
+/**
+ * @param $number
+ * @param null $value
+ *
+ * @return array|bool|object|void|null
+ */
 function rough_collie_get_animal_by_number( $number, $value = NULL ) {
 
 	if ( empty( $number ) || $number === "" ) {
@@ -282,6 +317,11 @@ function rough_collie_get_animal_by_number( $number, $value = NULL ) {
 	return $animal_data;
 }
 
+/**
+ * @param $animal_data
+ *
+ * @return array|string
+ */
 function rough_collie_compose_animal_name( $animal_data ) {
 
 	if ( $animal_data ===  false ) {
@@ -304,6 +344,11 @@ function rough_collie_compose_animal_name( $animal_data ) {
 
 }
 
+/**
+ * @param $animal_data
+ * @param $rowspan
+ * @param $level
+ */
 function rough_collie_animal_link_data( $animal_data, $rowspan, $level ) {
 
 	if ( empty( $animal_data ) ) {
@@ -334,6 +379,12 @@ function rough_collie_animal_link_data( $animal_data, $rowspan, $level ) {
 
 }
 
+/**
+ * @param $contact_id
+ * @param $kennel
+ *
+ * @return string
+ */
 function rough_collie_contact_data( $contact_id, $kennel ) {
 
 	if ( $contact_id ===  "-" ) {
