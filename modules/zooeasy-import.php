@@ -7,7 +7,6 @@
  * @since Rougcollie 1.0
  */
 
-
 if ( ! is_admin() ) {
 	die();
 }
@@ -50,6 +49,10 @@ function zooeasy_import() {
 
 	printf( '<h1 class="wp-heading-inline">%s</h1>',
 		esc_html__( 'Import data from collies and kennels.', 'roughcollie' )
+	);
+
+	printf( '<p>%s</p>',
+		esc_html__( 'Use CSV files with the text animal or contact included in the filename.', 'roughcollie' )
 	);
 
 	$upload_dir  = wp_get_upload_dir();
@@ -100,7 +103,7 @@ function rough_collie_import_and_process( $upload_path ) {
 
 	// Checks on existing CSV files.
 	if ( empty( $zooeasy_files ) || 0 === count( $zooeasy_files ) ) {
-		esc_html_e( 'No CSV files found to import.', 'roughcollie' );
+		esc_html_e( 'No CSV files found to import. Please upload the animals and contact files in the media first.', 'roughcollie' );
 		return;
 	}
 
@@ -111,23 +114,23 @@ function rough_collie_import_and_process( $upload_path ) {
 
 	foreach ( $zooeasy_files as $zooeasy_file ) {
 
-		printf( '<p>%s: %s</p>',
-			esc_html__( 'Processing ', 'roughcollie' ),
-			esc_url( $zooeasy_file )
-		);
-
 		if ( file_exists( $zooeasy_file  ) ) {
-			$done = rough_collie_ftp_import( $zooeasy_file );
-			echo "<p>" . esc_url( $done ) . "</p>";
+			rough_collie_ftp_import( $zooeasy_file );
 		}
 
 	}
 
-	esc_html_e( 'All files have been processed.', 'roughcollie' );
+	esc_html_e( 'All files have been processed and deleted.', 'roughcollie' );
 
 }
 
 
+/**
+ * @param $data_rows_names
+ * @param $csv_head_names
+ *
+ * @return array
+ */
 function rough_collie_get_key_by_name( $data_rows_names, $csv_head_names ) {
 
 	$data_rows_numbers = array();
@@ -143,6 +146,9 @@ function rough_collie_get_key_by_name( $data_rows_names, $csv_head_names ) {
 
 }
 
+/**
+ * @param $zooeasy_file
+ */
 function rough_collie_ftp_import( $zooeasy_file ) {
 
 	global $wpdb;
@@ -170,6 +176,9 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 
 		$column_names = array (
 			'Number',
+			//'Initials',
+			//'PrefixLastname',
+			//'Lastname',
 			'BusinessName',
 			'Name',
 			"Homepage",
@@ -179,9 +188,13 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 
 	} else {
 
-		$warning = "<p><strong>" . $zooeasy_file . "</strong>" . __( 'is not an import file.', 'roughcollie' ) . "</p>";
+		printf( '<p><strong>"%s</strong> %s</p>',
+			esc_html( basename( $zooeasy_file ) ),
+			esc_html__( 'is not an import file.', 'roughcollie' )
+		);
 
-		return ( $warning );
+
+		return;
 
 	}
 
@@ -219,13 +232,19 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 
 	};
 
-	$message = "<p>The data from <strong>" . $zooeasy_file . "</strong> " . __( 'has been imported and the file deleted.', 'roughcollie' ) . "</p>";
+	printf( '<p><strong>"%s</strong>: %s</p>',
+		esc_html( basename( $zooeasy_file ) ),
+		esc_html__( 'imported.', 'roughcollie' )
+	);
 
-	return ($message );
+	return;
 
 }
 
 
+/**
+ * @param $zooeasy_file
+ */
 function rough_collie_remove_csv_attachment( $zooeasy_file ) {
 
 	$base          = basename( $zooeasy_file );
