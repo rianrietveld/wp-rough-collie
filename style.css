@@ -86,6 +86,10 @@ dl:after {
   color: #333;
 }
 
+.pedigree_table {
+	width: 100%;
+}
+
 .pedigree_table td {
 	vertical-align: middle;
 	height: 2em;
