@@ -12,7 +12,7 @@ if ( ! is_admin() ) {
 }
 
 /**
- * Create menu item in the Adin.
+ * Create menu item in the Admin.
  */
 function rough_collie_admin_menu() {
 	add_menu_page(
@@ -176,9 +176,9 @@ function rough_collie_ftp_import( $zooeasy_file ) {
 
 		$column_names = array (
 			'Number',
-			//'Initials',
-			//'PrefixLastname',
-			//'Lastname',
+			'Initials',
+			'PrefixLastname',
+			'Lastname',
 			'BusinessName',
 			'Name',
 			"Homepage",
