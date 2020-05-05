@@ -222,9 +222,6 @@ function rough_collie_get_kennel_by_country( $country ) {
 
 function rough_collie_show_kennels_data( $kennel_data ) {
 
-
-
-
 	?><ul><?php
 	foreach ( $kennel_data as $key => $value ) {
 
@@ -311,8 +308,12 @@ function rough_collie_get_collies_by_kennel( $number ) {
 
 	asort( $collie_data );
 
+	printf( '<h2>%s (%s)</h2>',
+		esc_html__('Collies', 'roughcollie' ),
+		esc_html( count( $collie_data ) )
+	);
+
 	?>
-	<h2>Collies</h2>
 	<ul>
 	<?php
 
